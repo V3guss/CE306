@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title> Currency Converter nakub </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    #3b82f6 0%,
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 80% 80%,
+                    #8b5cf6 0%,
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #07111f,
+                    #101a35,
+                    #17102d
+                );
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 30px;
+
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 900px;
+
+        }
+
+
+        /* =====================
+           Header
+        ===================== */
+
+        .header {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .logo {
+
+            font-size: 45px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 32px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .header p {
+
+            color: #aab5cf;
+
+            margin-top: 8px;
+
+        }
+
+
+        /* =====================
+           Main Card
+        ===================== */
+
+        .card {
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.15);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            border-radius: 25px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.4);
+
+            animation:
+                showCard 0.7s ease;
+
+        }
+
+
+        @keyframes showCard {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================
+           Converter
+        ===================== */
+
+        .converter {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 70px 1fr;
+
+            gap: 15px;
+
+            align-items: end;
+
+        }
+
+
+        .box label {
+
+            display: block;
+
+            color: #aab5cf;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .input-box {
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.15);
+
+            border-radius: 16px;
+
+            padding: 15px;
+
+        }
+
+
+        .input-box input {
+
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            color: white;
+
+            font-size: 25px;
+
+            font-weight: bold;
+
+        }
+
+
+        .input-box input::placeholder {
+
+            color: #66728c;
+
+        }
+
+
+        select {
+
+            width: 100%;
+
+            margin-top: 12px;
+
+            padding: 10px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #202b45;
+
+            color: white;
+
+            font-size: 15px;
+
+            outline: none;
+
+        }
+
+
+        /* =====================
+           Swap Button
+        ===================== */
+
+        .swap-area {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding-bottom: 30px;
+
+        }
+
+
+        .swap {
+
+            width: 52px;
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #8b5cf6
+                );
+
+            color: white;
+
+            font-size: 23px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 8px 25px
+                rgba(59, 130, 246, 0.4);
+
+        }
+
+
+        .swap:hover {
+
+            transform:
+                rotate(180deg)
+                scale(1.08);
+
+        }
+
+
+        /* =====================
+           Rate
+        ===================== */
+
+        .rate {
+
+            margin-top: 25px;
+
+            padding: 15px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(59, 130, 246, 0.1);
+
+            text-align: center;
+
+            color: #b9c7e8;
+
+        }
+
+
+        .rate strong {
+
+            color: white;
+
+        }
+
+
+        /* =====================
+           Buttons
+        ===================== */
+
+        .buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .btn {
+
+            flex: 1;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+
+        .convert-btn {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #8b5cf6
+                );
+
+            color: white;
+
+        }
+
+
+        .clear-btn {
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color: #c7d2e9;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+        }
+
+
+        .btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            opacity: 0.9;
+
+        }
+
+
+        /* =====================
+           Bottom
+        ===================== */
+
+        .bottom {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .panel {
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.1);
+
+            border-radius: 18px;
+
+            padding: 20px;
+
+        }
+
+
+        .panel h3 {
+
+            margin-bottom: 15px;
+
+            font-size: 17px;
+
+        }
+
+
+        /* =====================
+           History
+        ===================== */
+
+        .history {
+
+            max-height: 180px;
+
+            overflow-y: auto;
+
+        }
+
+
+        .history-item {
+
+            padding: 10px;
+
+            margin-bottom: 8px;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border-radius: 10px;
+
+            color: #c9d4ea;
+
+            font-size: 14px;
+
+        }
+
+
+        .empty {
+
+            color: #68748e;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================
+           Update
+        ===================== */
+
+        .update {
+
+            color: #aebbd4;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            width: 8px;
+
+            height: 8px;
+
+            background: #4ade80;
+
+            border-radius: 50%;
+
+            margin-right: 7px;
+
+        }
+
+
+        /* =====================
+           Mobile
+        ===================== */
+
+        @media (max-width: 700px) {
+
+            body {
+
+                padding: 15px;
+
+            }
+
+
+            .card {
+
+                padding: 20px;
+
+            }
+
+
+            .converter {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .swap-area {
+
+                padding: 0;
+
+            }
+
+
+            .swap {
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+
+            .swap:hover {
+
+                transform:
+                    rotate(270deg)
+                    scale(1.08);
+
+            }
+
+
+            .bottom {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .header h1 {
+
+                font-size: 26px;
+
+            }
+
+
+            .buttons {
+
+                flex-direction: column;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =====================
+         Header
+    ====================== -->
+
+    <div class="header">
+
+        <h1>
+            Currency
+        </h1>
+
+        <p>
+           ระบบแปลงสกุลเงิน
+        </p>
+
+    </div>
+
+
+    <!-- =====================
+         Main Card
+    ====================== -->
+
+    <div class="card">
+
+
+        <div class="converter">
+
+
+            <!-- =====================
+                 Amount One
+            ====================== -->
+
+            <div class="box">
+
+                <label>
+                    จำนวนเงินต้นทาง
+                </label>
+
+
+                <div class="input-box">
+
+
+                    <input
+                        type="number"
+                        id="amount-one"
+                        placeholder="0.00"
+                    >
+
+
+                    <select id="currency-one">
+
+                        <option value="THB">
+                            🇹🇭 THB - บาท
+                        </option>
+
+                        <option value="USD">
+                            🇺🇸 USD - ดอลลาร์
+                        </option>
+
+                    </select>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 Swap Button
+            ====================== -->
+
+            <div class="swap-area">
+
+                <button
+                    class="swap"
+                    onclick="swapCurrency()"
+                    title="สลับสกุลเงิน"
+                >
+
+                    ⇄
+
+                </button>
+
+            </div>
+
+
+            <!-- =====================
+                 Amount Two
+            ====================== -->
+
+            <div class="box">
+
+                <label>
+                    จำนวนเงินปลายทาง
+                </label>
+
+
+                <div class="input-box">
+
+
+                    <input
+                        type="number"
+                        id="amount-two"
+                        placeholder="0.00"
+                    >
+
+
+                    <select id="currency-two">
+
+                        <option value="USD">
+                            🇺🇸 USD - ดอลลาร์
+                        </option>
+
+                        <option value="THB">
+                            🇹🇭 THB - บาท
+                        </option>
+
+                    </select>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =====================
+             Exchange Rate
+        ====================== -->
+
+        <div
+            class="rate"
+            id="rate"
+        >
+
+            1 USD = 28.17 THB
+
+        </div>
+
+
+        <!-- =====================
+             Buttons
+        ====================== -->
+
+        <div class="buttons">
+
+
+            <button
+                class="btn convert-btn"
+                onclick="convert()"
+            >
+
+                 แปลงเงิน
+
+            </button>
+
+
+            <button
+                class="btn clear-btn"
+                onclick="clearData()"
+            >
+
+                🗑 ล้างข้อมูล
+
+            </button>
+
+
+        </div>
+
+
+        <!-- =====================
+             Bottom
+        ====================== -->
+
+        <div class="bottom">
+
+
+            <!-- History -->
+
+            <div class="panel">
+
+                <h3>
+                    🕘 ประวัติการแปลงเงิน
+                </h3>
+
+
+                <div
+                    class="history"
+                    id="history"
+                >
+
+                    <div class="empty">
+
+                        ยังไม่มีประวัติการแปลงเงิน
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- System -->
+
+            <div class="panel">
+
+                <h3>
+                    📊 ข้อมูลระบบ
+                </h3>
+
+
+                <div class="update">
+
+
+                    <p>
+
+                        <span class="status"></span>
+
+                        ระบบพร้อมใช้งาน
+
+                    </p>
+
+
+                    <p id="update-time">
+
+                        อัปเดตล่าสุด: -
+
+                    </p>
+
+
+                    <p>
+
+                        รองรับ: THB ↔ USD
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+    /* =====================================
+       อัตราแลกเปลี่ยน
+    ====================================== */
+
+    const rate = 28.17;
+
+
+    /* =====================================
+       เก็บประวัติ
+    ====================================== */
+
+    let history = [];
+
+
+
+    /* =====================================
+       แปลงเงินจากช่องต้นทาง
+    ====================================== */
+
+    function convert() {
+
+
+        const amount = parseFloat(
+
+            document.getElementById(
+                "amount-one"
+            ).value
+
+        );
+
+
+        const from =
+
+            document.getElementById(
+                "currency-one"
+            ).value;
+
+
+        const to =
+
+            document.getElementById(
+                "currency-two"
+            ).value;
+
+
+
+        if (isNaN(amount)) {
+
+            alert(
+                "กรุณากรอกจำนวนเงิน"
+            );
+
+            return;
+
+        }
+
+
+
+        let result;
+
+
+
+        if (
+            from === "THB" &&
+            to === "USD"
+        ) {
+
+            result =
+                amount / rate;
+
+        }
+
+
+        else if (
+            from === "USD" &&
+            to === "THB"
+        ) {
+
+            result =
+                amount * rate;
+
+        }
+
+
+        else {
+
+            result =
+                amount;
+
+        }
+
+
+
+        document.getElementById(
+            "amount-two"
+        ).value =
+
+            result.toFixed(2);
+
+
+
+        updateRate(
+            from,
+            to
+        );
+
+
+
+        /* เพิ่มประวัติ
+           เฉพาะตอนกดปุ่ม
+           แปลงเงิน
+        */
+
+        addHistory(
+
+            amount,
+
+            from,
+
+            result,
+
+            to
+
+        );
+
+
+
+        updateTime();
+
+    }
+
+
+
+    /* =====================================
+       แปลงย้อนกลับจาก amount-two
+    ====================================== */
+
+    function convertReverse() {
+
+
+        const amount = parseFloat(
+
+            document.getElementById(
+                "amount-two"
+            ).value
+
+        );
+
+
+        const from =
+
+            document.getElementById(
+                "currency-one"
+            ).value;
+
+
+        const to =
+
+            document.getElementById(
+                "currency-two"
+            ).value;
+
+
+
+        if (isNaN(amount)) {
+
+            document.getElementById(
+                "amount-one"
+            ).value = "";
+
+            return;
+
+        }
+
+
+
+        let result;
+
+
+
+        if (
+            from === "THB" &&
+            to === "USD"
+        ) {
+
+            /*
+              ปลายทางเป็น USD
+              จึงคำนวณกลับเป็น THB
+            */
+
+            result =
+                amount * rate;
+
+        }
+
+
+        else if (
+            from === "USD" &&
+            to === "THB"
+        ) {
+
+            /*
+              ปลายทางเป็น THB
+              จึงคำนวณกลับเป็น USD
+            */
+
+            result =
+                amount / rate;
+
+        }
+
+
+        else {
+
+            result =
+                amount;
+
+        }
+
+
+
+        document.getElementById(
+            "amount-one"
+        ).value =
+
+            result.toFixed(2);
+
+    }
+
+
+
+    /* =====================================
+       ปุ่มสลับสกุลเงิน
+    ====================================== */
+
+    function swapCurrency() {
+
+
+        const currencyOne =
+
+            document.getElementById(
+                "currency-one"
+            );
+
+
+        const currencyTwo =
+
+            document.getElementById(
+                "currency-two"
+            );
+
+
+
+        /*
+          เก็บค่าสกุลเงินเดิม
+        */
+
+        const temp =
+            currencyOne.value;
+
+
+
+        /*
+          สลับสกุลเงิน
+        */
+
+        currencyOne.value =
+            currencyTwo.value;
+
+
+        currencyTwo.value =
+            temp;
+
+
+
+        /*
+          สลับจำนวนเงินด้วย
+          เพื่อให้ค่าถูกต้อง
+        */
+
+        const amountOne =
+
+            document.getElementById(
+                "amount-one"
+            );
+
+
+        const amountTwo =
+
+            document.getElementById(
+                "amount-two"
+            );
+
+
+
+        const tempAmount =
+            amountOne.value;
+
+
+
+        amountOne.value =
+            amountTwo.value;
+
+
+        amountTwo.value =
+            tempAmount;
+
+
+
+        /*
+          อัปเดตอัตราแลกเปลี่ยน
+        */
+
+        updateRate(
+
+            currencyOne.value,
+
+            currencyTwo.value
+
+        );
+
+    }
+
+
+
+    /* =====================================
+       เพิ่มประวัติ
+    ====================================== */
+
+    function addHistory(
+
+        amount,
+        from,
+        result,
+        to
+
+    ) {
+
+
+        const text =
+
+            `${amount.toLocaleString()} ${from}
+            → ${result.toFixed(2)} ${to}`;
+
+
+
+        /*
+          ป้องกันรายการซ้ำติดกัน
+        */
+
+        if (
+
+            history.length > 0 &&
+
+            history[0] === text
+
+        ) {
+
+            return;
+
+        }
+
+
+
+        /*
+          เพิ่มไว้ด้านบน
+        */
+
+        history.unshift(text);
+
+
+
+        /*
+          เก็บแค่ 10 รายการ
+        */
+
+        if (
+            history.length > 10
+        ) {
+
+            history.pop();
+
+        }
+
+
+
+        showHistory();
+
+    }
+
+
+
+    /* =====================================
+       แสดงประวัติ
+    ====================================== */
+
+    function showHistory() {
+
+
+        const historyBox =
+
+            document.getElementById(
+                "history"
+            );
+
+
+
+        if (
+            history.length === 0
+        ) {
+
+            historyBox.innerHTML =
+
+                '<div class="empty">' +
+
+                'ยังไม่มีประวัติการแปลงเงิน' +
+
+                '</div>';
+
+            return;
+
+        }
+
+
+
+        historyBox.innerHTML =
+
+            history.map(
+
+                function(item, index) {
+
+                    return `
+
+                        <div class="history-item">
+
+                            ${index + 1}. ${item}
+
+                        </div>
+
+                    `;
+
+                }
+
+            ).join("");
+
+    }
+
+
+
+    /* =====================================
+       ล้างข้อมูล
+    ====================================== */
+
+    function clearData() {
+
+
+        document.getElementById(
+            "amount-one"
+        ).value = "";
+
+
+        document.getElementById(
+            "amount-two"
+        ).value = "";
+
+
+        document.getElementById(
+            "currency-one"
+        ).value = "THB";
+
+
+        document.getElementById(
+            "currency-two"
+        ).value = "USD";
+
+
+        document.getElementById(
+            "rate"
+        ).innerText =
+
+            "1 USD = 28.17 THB";
+
+
+        document.getElementById(
+            "update-time"
+        ).innerText =
+
+            "อัปเดตล่าสุด: -";
+
+    }
+
+
+
+    /* =====================================
+       แสดงอัตราแลกเปลี่ยน
+    ====================================== */
+
+    function updateRate(
+        from,
+        to
+    ) {
+
+
+        let text;
+
+
+
+        if (
+            from === "THB" &&
+            to === "USD"
+        ) {
+
+            text =
+
+                "1 THB = " +
+
+                (
+                    1 / rate
+                ).toFixed(4) +
+
+                " USD";
+
+        }
+
+
+        else if (
+            from === "USD" &&
+            to === "THB"
+        ) {
+
+            text =
+
+                "1 USD = " +
+
+                rate.toFixed(2) +
+
+                " THB";
+
+        }
+
+
+        else {
+
+            text =
+
+                "1 " +
+                from +
+                " = 1 " +
+                to;
+
+        }
+
+
+
+        document.getElementById(
+            "rate"
+        ).innerText = text;
+
+    }
+
+
+
+    /* =====================================
+       เวลาอัปเดตล่าสุด
+    ====================================== */
+
+    function updateTime() {
+
+
+        const now =
+            new Date();
+
+
+
+        document.getElementById(
+            "update-time"
+        ).innerText =
+
+            "อัปเดตล่าสุด: " +
+
+            now.toLocaleString(
+                "th-TH"
+            );
+
+    }
+
+
+
+    /* =====================================
+       เมื่อกรอก amount-two
+       ให้คำนวณย้อนกลับทันที
+    ====================================== */
+
+    document.getElementById(
+        "amount-two"
+    ).addEventListener(
+
+        "input",
+
+        function() {
+
+            convertReverse();
+
+        }
+
+    );
+
+
+
+</script>
+
+
+</body>
+
+</html>
