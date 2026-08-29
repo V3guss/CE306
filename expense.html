@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>บัญชีรายรับรายจ่าย</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f7f5;
+            color: #222;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        /* Header */
+
+        header {
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+            font-size: 30px;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            margin-top: 8px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Summary */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-box {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .summary-box span {
+            display: block;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .summary-box strong {
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        /* Form */
+
+        .form-box {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+            gap: 10px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            background: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #888;
+        }
+
+        button {
+            border: none;
+            border-radius: 7px;
+            padding: 11px 18px;
+            background: #222;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        /* Search */
+
+        .search {
+            margin-bottom: 15px;
+        }
+
+        .search input {
+            background: white;
+        }
+
+        /* Table */
+
+        .table-box {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            font-size: 12px;
+            color: #888;
+            font-weight: 400;
+            padding: 15px 18px;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            padding: 16px 18px;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .income {
+            color: #27804b;
+        }
+
+        .expense {
+            color: #c44;
+        }
+
+        .delete-btn {
+            background: transparent;
+            color: #999;
+            padding: 5px 8px;
+        }
+
+        .delete-btn:hover {
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        /* Delete All */
+
+        .delete-all {
+            margin-top: 20px;
+            background: transparent;
+            color: #999;
+            border: 1px solid #ddd;
+        }
+
+        .delete-all:hover {
+            background: #eee;
+            color: #222;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 750px) {
+
+            body {
+                padding: 25px 15px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .form {
+                grid-template-columns: 1fr;
+            }
+
+            .table-box {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 650px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+
+        <header>
+            <h1>บัญชีรายรับรายจ่าย</h1>
+            <p>Expense program</p>
+        </header>
+
+
+        <!-- Summary -->
+
+        <div class="summary">
+
+            <div class="summary-box">
+                <span>รายรับทั้งหมด</span>
+                <strong id="totalIncome">฿0</strong>
+            </div>
+
+            <div class="summary-box">
+                <span>รายจ่ายทั้งหมด</span>
+                <strong id="totalExpense">฿0</strong>
+            </div>
+
+            <div class="summary-box">
+                <span>คงเหลือ</span>
+                <strong id="balance">฿0</strong>
+            </div>
+
+        </div>
+
+
+        <!-- Add Transaction -->
+
+        <div class="form-box">
+
+            <div class="form">
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="ชื่อรายการ"
+                >
+
+                <input
+                    type="number"
+                    id="amount"
+                    placeholder="จำนวนเงิน"
+                >
+
+                <select id="type">
+                    <option value="income">รายรับ</option>
+                    <option value="expense">รายจ่าย</option>
+                </select>
+
+                <select id="category">
+
+                    <option value="">หมวดหมู่</option>
+
+                    <option value="เงินเดือน">
+                        เงินเดือน
+                    </option>
+
+                    <option value="อาหาร">
+                        อาหาร
+                    </option>
+
+                    <option value="เดินทาง">
+                        เดินทาง
+                    </option>
+
+                    <option value="ช้อปปิ้ง">
+                        ช้อปปิ้ง
+                    </option>
+
+                    <option value="บิล">
+                        บิล
+                    </option>
+
+                    <option value="อื่นๆ">
+                        อื่นๆ
+                    </option>
+
+                </select>
+
+                <button onclick="addTransaction()">
+                    เพิ่ม
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Search -->
+
+        <div class="search">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="ค้นหารายการ..."
+                oninput="displayTransactions()"
+            >
+
+        </div>
+
+
+        <!-- Table -->
+
+        <div class="table-box">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>รายการ</th>
+                        <th>ประเภท</th>
+                        <th>หมวดหมู่</th>
+                        <th>จำนวนเงิน</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="transactionList"></tbody>
+
+            </table>
+
+        </div>
+
+
+        <button
+            class="delete-all"
+            onclick="deleteAll()"
+        >
+            ล้างข้อมูลทั้งหมด
+        </button>
+
+    </div>
+
+
+    <script>
+
+        let transactions = [];
+
+
+        // เพิ่มรายการ
+
+        function addTransaction() {
+
+            const name =
+                document.getElementById("name").value;
+
+            const amount =
+                Number(
+                    document.getElementById("amount").value
+                );
+
+            const type =
+                document.getElementById("type").value;
+
+            const category =
+                document.getElementById("category").value;
+
+
+            if (
+                name === "" ||
+                amount <= 0 ||
+                category === ""
+            ) {
+
+                alert("กรุณากรอกข้อมูลให้ครบ");
+
+                return;
+            }
+
+
+            const transaction = {
+
+                id: Date.now(),
+
+                name: name,
+
+                amount: amount,
+
+                type: type,
+
+                category: category
+
+            };
+
+
+            transactions.push(transaction);
+
+
+            document.getElementById("name").value = "";
+
+            document.getElementById("amount").value = "";
+
+            document.getElementById("category").value = "";
+
+
+            displayTransactions();
+
+        }
+
+
+        // แสดงรายการ
+
+        function displayTransactions() {
+
+            const list =
+                document.getElementById("transactionList");
+
+            const search =
+                document
+                    .getElementById("search")
+                    .value
+                    .toLowerCase();
+
+
+            const filtered =
+                transactions.filter(item =>
+
+                    item.name
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    item.category
+                        .toLowerCase()
+                        .includes(search)
+
+                );
+
+
+            list.innerHTML = "";
+
+
+            filtered.forEach(item => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                const typeText =
+                    item.type === "income"
+                        ? "รายรับ"
+                        : "รายจ่าย";
+
+
+                const sign =
+                    item.type === "income"
+                        ? "+"
+                        : "-";
+
+
+                const className =
+                    item.type === "income"
+                        ? "income"
+                        : "expense";
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${item.name}
+                    </td>
+
+                    <td class="${className}">
+                        ${typeText}
+                    </td>
+
+                    <td>
+                        ${item.category}
+                    </td>
+
+                    <td class="${className}">
+                        ${sign}${item.amount.toLocaleString()} ฿
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteTransaction(${item.id})"
+                        >
+                            ลบ
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                list.appendChild(row);
+
+            });
+
+
+            calculateSummary();
+
+        }
+
+
+        // คำนวณยอดรวม
+
+        function calculateSummary() {
+
+            let income = 0;
+
+            let expense = 0;
+
+
+            transactions.forEach(item => {
+
+                if (item.type === "income") {
+
+                    income += item.amount;
+
+                } else {
+
+                    expense += item.amount;
+
+                }
+
+            });
+
+
+            const balance =
+                income - expense;
+
+
+            document.getElementById("totalIncome")
+                .textContent =
+                "฿" + income.toLocaleString();
+
+
+            document.getElementById("totalExpense")
+                .textContent =
+                "฿" + expense.toLocaleString();
+
+
+            document.getElementById("balance")
+                .textContent =
+                "฿" + balance.toLocaleString();
+
+        }
+
+
+        // ลบรายการ
+
+        function deleteTransaction(id) {
+
+            transactions =
+                transactions.filter(
+                    item => item.id !== id
+                );
+
+
+            displayTransactions();
+
+        }
+
+
+        // ล้างทั้งหมด
+
+        function deleteAll() {
+
+            if (transactions.length === 0) {
+
+                return;
+
+            }
+
+
+            if (
+                confirm("ต้องการล้างข้อมูลทั้งหมดหรือไม่?")
+            ) {
+
+                transactions = [];
+
+                displayTransactions();
+
+            }
+
+        }
+
+
+        displayTransactions();
+
+    </script>
+
+</body>
+
+</html>
