@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cute Battle Arena</title>
+
+    <link
+        rel="stylesheet"
+        href="./output.css"
+    >
+
+</head>
+
+
+<body
+    class="min-h-screen bg-pink-50 text-slate-800 transition-colors duration-300 dark:bg-slate-950 dark:text-white"
+>
+
+
+<main class="mx-auto max-w-6xl px-4 py-6">
+
+
+    <!-- =====================================
+         HOME SCREEN
+    ====================================== -->
+
+    <section
+        id="homeScreen"
+        class="flex min-h-[85vh] items-center justify-center"
+    >
+
+        <div
+            class="w-full max-w-xl rounded-[2rem] bg-white p-8 text-center shadow-2xl dark:bg-slate-800 sm:p-12"
+        >
+
+            <div class="text-7xl">
+                🥊🌸
+            </div>
+
+            <h1
+                id="homeTitle"
+                class="mt-4 text-4xl font-black text-pink-600 dark:text-pink-400 sm:text-6xl"
+            >
+                Cute Battle Arena
+            </h1>
+
+            <p
+                id="homeDescription"
+                class="mt-4 text-slate-500 dark:text-slate-300"
+            >
+                เอาชนะศัตรูให้ครบทั้ง 5 ด่าน!
+            </p>
+
+
+            <!-- Language -->
+
+            <div
+                class="mt-6 flex justify-center gap-2"
+            >
+
+                <button
+                    id="thaiBtn"
+                    class="rounded-full bg-pink-500 px-5 py-2 font-bold text-white"
+                >
+                    🇹🇭 ไทย
+                </button>
+
+                <button
+                    id="englishBtn"
+                    class="rounded-full bg-slate-200 px-5 py-2 font-bold text-slate-700 dark:bg-slate-700 dark:text-white"
+                >
+                    🇬🇧 English
+                </button>
+
+            </div>
+
+
+            <!-- Start -->
+
+            <button
+                id="startBtn"
+                class="mt-8 w-full rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 px-6 py-5 text-xl font-black text-white shadow-xl transition hover:-translate-y-1 hover:scale-[1.02]"
+            >
+                ▶️ เริ่มเกม
+            </button>
+
+
+            <!-- Dark -->
+
+            <button
+                id="homeDarkBtn"
+                class="mt-4 rounded-full bg-slate-100 px-5 py-3 font-bold dark:bg-slate-700"
+            >
+                🌙 Dark Mode
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         GAME SCREEN
+    ====================================== -->
+
+    <section
+        id="gameScreen"
+        class="hidden"
+    >
+
+
+        <!-- Header -->
+
+        <header class="mb-5 text-center">
+
+            <div class="text-4xl">
+                🌸 🥊 🌸
+            </div>
+
+            <h1
+                id="gameTitle"
+                class="text-3xl font-black sm:text-5xl"
+            >
+                Cute Battle Arena
+            </h1>
+
+        </header>
+
+
+        <!-- Controls -->
+
+        <div
+            class="mb-5 flex flex-wrap justify-center gap-2"
+        >
+
+            <button
+                id="darkBtn"
+                class="rounded-full bg-white px-4 py-2 font-bold shadow dark:bg-slate-800"
+            >
+                🌙 Dark
+            </button>
+
+            <button
+                id="soundBtn"
+                class="rounded-full bg-white px-4 py-2 font-bold shadow dark:bg-slate-800"
+            >
+                🔊 Sound
+            </button>
+
+            <button
+                id="helpBtn"
+                class="rounded-full bg-white px-4 py-2 font-bold shadow dark:bg-slate-800"
+            >
+                ❓ วิธีเล่น
+            </button>
+
+        </div>
+
+
+        <!-- Stage -->
+
+        <div class="mb-5 text-center">
+
+            <div
+                class="inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 shadow-lg dark:bg-slate-800"
+            >
+
+                🏆
+
+                <span id="stageText">
+                    ด่าน 1/5
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- HP -->
+
+        <section
+            class="mb-5 grid gap-4 md:grid-cols-2"
+        >
+
+            <!-- Player -->
+
+            <div
+                class="rounded-3xl bg-white p-4 shadow-lg dark:bg-slate-800"
+            >
+
+                <div class="mb-2 flex justify-between">
+
+                    <b id="playerName">
+                        🧚‍♀️ ฮีโร่
+                    </b>
+
+                    <b
+                        id="playerHpText"
+                        class="text-green-500"
+                    >
+                        100 HP
+                    </b>
+
+                </div>
+
+                <div
+                    class="h-5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700"
+                >
+
+                    <div
+                        id="playerHp"
+                        class="h-full rounded-full bg-green-500 transition-all duration-500"
+                        style="width:100%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Enemy -->
+
+            <div
+                class="rounded-3xl bg-white p-4 shadow-lg dark:bg-slate-800"
+            >
+
+                <div class="mb-2 flex justify-between">
+
+                    <b id="enemyName">
+                        🤖 หุ่นยนต์
+                    </b>
+
+                    <b
+                        id="enemyHpText"
+                        class="text-red-500"
+                    >
+                        100 HP
+                    </b>
+
+                </div>
+
+                <div
+                    class="h-5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700"
+                >
+
+                    <div
+                        id="enemyHp"
+                        class="h-full rounded-full bg-red-500 transition-all duration-500"
+                        style="width:100%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             ARENA
+        ====================================== -->
+
+        <section
+            class="relative mb-5 h-[430px] overflow-hidden rounded-[2rem] border-4 border-white bg-gradient-to-b from-sky-300 via-purple-300 to-pink-300 shadow-2xl dark:border-slate-700 dark:from-indigo-950 dark:via-purple-950 dark:to-slate-900"
+        >
+
+
+            <!-- Message -->
+
+            <div
+                id="battleMessage"
+                class="absolute left-1/2 top-5 z-40 w-[90%] -translate-x-1/2 rounded-2xl bg-white/80 px-4 py-3 text-center font-black text-purple-700 shadow-lg dark:bg-slate-900/80 dark:text-pink-300"
+            >
+                ⚔️ พร้อมต่อสู้!
+            </div>
+
+
+            <!-- Clouds -->
+
+            <div
+                class="floating absolute left-[10%] top-[20%] text-5xl"
+            >
+                ☁️
+            </div>
+
+            <div
+                class="floating absolute right-[10%] top-[25%] text-5xl"
+            >
+                ☁️
+            </div>
+
+
+            <!-- Ground -->
+
+            <div
+                class="absolute bottom-0 h-28 w-full bg-green-300 dark:bg-green-950"
+            ></div>
+
+
+            <!-- Player -->
+
+            <div
+                id="player"
+                class="floating absolute bottom-16 left-[8%] z-20 flex h-40 w-36 flex-col items-center justify-center rounded-[2rem] border-4 border-white bg-pink-400 text-6xl shadow-2xl"
+            >
+
+                🧚‍♀️
+
+                <span class="text-xs font-black text-white">
+                    HERO
+                </span>
+
+            </div>
+
+
+            <!-- VS -->
+
+            <div
+                class="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/80 px-5 py-3 text-4xl font-black text-pink-500 shadow-lg"
+            >
+                VS
+            </div>
+
+
+            <!-- Enemy -->
+
+            <div
+                id="enemy"
+                class="floating absolute bottom-16 right-[8%] z-20 flex h-40 w-36 flex-col items-center justify-center rounded-[2rem] border-4 border-white bg-purple-500 text-6xl shadow-2xl"
+            >
+
+                <span id="enemyCharacter">
+                    🤖
+                </span>
+
+                <span
+                    id="enemyState"
+                    class="mt-1 text-xs font-black text-white"
+                >
+                    ENEMY
+                </span>
+
+            </div>
+
+
+            <!-- Effects -->
+
+            <div
+                id="attackEffect"
+                class="pointer-events-none absolute left-1/2 top-1/2 z-50 hidden -translate-x-1/2 -translate-y-1/2 text-7xl"
+            >
+                💥
+            </div>
+
+
+            <div
+                id="damagePopup"
+                class="pointer-events-none absolute left-1/2 top-1/2 z-50 hidden text-5xl font-black text-red-600"
+            >
+                -20
+            </div>
+
+        </section>
+
+
+
+        <!-- Turn -->
+
+        <div
+            id="turnStatus"
+            class="mb-4 text-center font-black"
+        >
+            🎮 ตาของคุณ
+        </div>
+
+
+        <!-- Buttons -->
+
+        <section
+            class="grid gap-3 sm:grid-cols-2"
+        >
+
+            <button
+                id="attackBtn"
+                class="min-h-16 rounded-2xl bg-gradient-to-r from-red-500 to-pink-500 px-5 py-4 text-lg font-black text-white shadow-lg transition hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+                ⚔️ โจมตี
+                <span
+                    id="attackHint"
+                    class="block text-xs font-normal"
+                >
+                    กด A
+                </span>
+            </button>
+
+
+            <button
+                id="defendBtn"
+                class="min-h-16 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 px-5 py-4 text-lg font-black text-white shadow-lg transition hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+                🛡️ ป้องกัน
+                <span
+                    id="defendHint"
+                    class="block text-xs font-normal"
+                >
+                    กด D
+                </span>
+            </button>
+
+        </section>
+
+
+        <!-- Restart -->
+
+        <section
+            class="mt-4 grid gap-3 sm:grid-cols-2"
+        >
+
+            <button
+                id="restartBtn"
+                class="rounded-2xl bg-slate-700 px-5 py-4 font-black text-white"
+            >
+                🔄 เริ่มใหม่ด่านนี้
+            </button>
+
+            <button
+                id="restartAllBtn"
+                class="rounded-2xl bg-purple-600 px-5 py-4 font-black text-white"
+            >
+                🏠 เริ่มใหม่ทั้งหมด
+            </button>
+
+        </section>
+
+
+        <!-- Result -->
+
+        <section
+            id="resultBox"
+            class="mt-6 hidden rounded-[2rem] bg-white p-8 text-center shadow-2xl dark:bg-slate-800"
+        >
+
+            <div
+                id="resultEmoji"
+                class="text-6xl"
+            >
+                🎉
+            </div>
+
+            <h2
+                id="resultTitle"
+                class="mt-3 text-3xl font-black text-pink-500"
+            >
+                ชนะ!
+            </h2>
+
+            <p
+                id="resultText"
+                class="mt-3 text-slate-500 dark:text-slate-300"
+            >
+                เยี่ยมมาก!
+            </p>
+
+        </section>
+
+
+    </section>
+
+</main>
+
+
+<script src="./script.js"></script>
+
+</body>
+
+</html>

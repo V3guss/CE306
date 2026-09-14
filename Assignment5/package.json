@@ -1,0 +1,12 @@
+{
+  "name": "click-challenge",
+  "version": "1.0.0",
+  "description": "Mini Fighting Game",
+  "scripts": {
+    "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./output.css --watch"
+  },
+  "dependencies": {
+    "tailwindcss": "^4.3.3",
+    "@tailwindcss/cli": "^4.3.3"
+  }
+}
